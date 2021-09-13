@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# remove script
+
+INPUT="$1"
+if [[ -v $INPUT ]]; then
+  echo "Input not given"
+  exit 1
+fi
+
+rm -f $HOME/.local/share/ssm/connections/"$INPUT" 2>/dev/null
