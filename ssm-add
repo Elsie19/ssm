@@ -1,0 +1,51 @@
+#!/bin/bash
+
+# Adding connections
+
+valid_ip() {
+    local IPA1=$1
+    local stat=1
+
+    if [[ $IPA1 =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
+        OIFS=$IFS
+        IFS='.'             #read man, you will understand, this is internal field separator; which is set as '.'
+        ip=( $ip )       # IP value is saved as array
+        IFS=$OIFS      #setting IFS back to its original value;
+        [[ ${ip[0]} -le 255 && ${ip[1]} -le 255 \
+            && ${ip[2]} -le 255 && ${ip[3]} -le 255 ]]  # It's testing if any part of IP is more than 255
+        stat=$? #If any part of IP as tested above is more than 255 stat will have a non zero value
+    fi
+    return $stat # as expected returning
+}
+
+INPUT="$1"
+NAME="$2"
+if [[ -v $INPUT ]]; then
+	echo "Input not given"
+fi
+if [[ -v $NAME ]]; then
+	echo "Name not given"
+fi
+
+# validation time
+
+# check if input contains an @ symbol
+if ! grep '@' <<< "$INPUT" >/dev/null; then
+  echo "Invalid IP address (does not contain @ symbol)"
+  exit 1
+fi
+
+if [[ $(cut -d@ -f1 <<< "$INPUT" | wc -l) == 0 ]]; then
+  echo "No text before @ symbol"
+  exit 1
+fi
+
+# validate IP address
+if ! valid_ip $(cut -d "@" -f2 <<< "$INPUT"); then
+  echo "Invalid IP address (IP has number exceeding 255)"
+  exit 1
+fi
+
+# echo time, then greater than alligator ;)
+echo "$INPUT" > $HOME/.local/share/ssm/connections/"$NAME"
+# vim:set ft=sh ts=4 sw=4 noet:

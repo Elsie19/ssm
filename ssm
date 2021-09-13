@@ -1,0 +1,19 @@
+#!/bin/sh
+
+# Helps with stupid ip addresses after your damn router gets replaced (think password manager for ssh, but for ip addresses)
+
+# MAIN SCRIPT (used for connecting to addresses)
+
+INPUT="$1"
+
+if ! command -v ssh >/dev/null; then
+  echo "ssh not installed"
+  exit 1
+fi
+
+if ! test -f $HOME/.local/share/ssm/connections/"$INPUT"; then
+  echo "$INPUT not a valid connection"
+  exit 1
+fi
+
+ssh $(cat $HOME/.local/share/ssm/connections/"$INPUT")
