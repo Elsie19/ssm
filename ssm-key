@@ -1,0 +1,5 @@
+#!/bin/sh
+
+INPUT="$1"
+
+cat $HOME/.ssh/id_rsa.pub | ssh "$INPUT" 'cat >> .ssh/authorized_keys'
