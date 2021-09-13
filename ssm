@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Helps with stupid ip addresses after your damn router gets replaced (think password manager for ssh, but for ip addresses)
+# Helps with stupid ip addresses after your damn router gets replaced (think password manager for ssh, but for ip addresses). Thanks dad...
 
 # MAIN SCRIPT (used for connecting to addresses)
 
