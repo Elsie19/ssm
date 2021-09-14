@@ -35,7 +35,7 @@ if ! grep '@' <<< "$INPUT" >/dev/null; then
   exit 1
 fi
 
-if [[ $(cut -d@ -f1 <<< "$INPUT" | wc -l) == 0 ]]; then
+if [[ $(cut -d@ -f1 <<< "$INPUT" | wc -c) == 1 ]]; then
   echo "No text before @ symbol"
   exit 1
 fi
